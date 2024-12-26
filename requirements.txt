@@ -1,0 +1,20 @@
+langchain-astradb
+langchain
+langchain-community 
+langchain-groq
+datasets
+pypdf
+python-dotenv
+pandas
+flask
+tiktoken
+SpeechRecognition
+pyttsx3
+pydub
+openai-whisper
+numpy
+deep-translator
+ffmpeg
+gdown
+gtts
+-e .
