@@ -1,0 +1,186 @@
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}"/>
+</head>
+<body>
+    <div class="container-fluid h-100">
+        <div class="row justify-content-center h-100">
+            <div class="col-md-8 col-xl-6 chat">
+                <div class="card">
+                    <div class="card-header msg_head">
+                        <div class="d-flex bd-highlight">
+                            <div class="img_cont">
+                                <img src="https://cdn-icons-png.flaticon.com/512/387/387569.png" class="rounded-circle user_img">
+                            </div>
+                            <div class="user_info">
+                                <span>Medical Chatbot</span>
+                                <p>Ask me anything!</p>
+                            </div>
+                            <select id="languageSelector" class="form-control mt-2">
+                                <option value="en" selected>English</option>
+                                {% for lang_code, lang_name in languages.items() %}
+                                <option value="{{ lang_code }}">{{ lang_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Language Selector -->
+                        
+                    </div>
+                    <div id="messageFormeight" class="card-body msg_card_body"></div>
+                    <div class="card-footer">
+                        <form id="messageArea" class="input-group">
+                            <input type="text" id="text" name="msg" placeholder="Type your message..." autocomplete="off" class="form-control type_msg" required />
+                            <div class="input-group-append">
+                                <button type="submit" id="send" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></button>
+                         </div>
+
+                        </form>
+                        <button id="voiceAssistant" class="btn btn-primary ml-2" title="Speak"><i class="fas fa-microphone"></i></button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <audio id="responseAudio" controls style="display: none;"></audio>
+
+    <script>
+        $(document).ready(function () {
+            const languageSelector = $("#languageSelector");
+            let selectedLanguage = "en";
+
+            // Update selected language
+            languageSelector.on("change", function () {
+                selectedLanguage = $(this).val();
+            });
+
+            // Handle text message submission
+            $("#messageArea").on("submit", function (event) {
+                const rawText = $("#text").val();
+                const timestamp = new Date().toLocaleTimeString();
+                $("#text").val("");
+
+                const userHtml = `
+                    <div class="d-flex justify-content-end mb-4">
+                        <div class="msg_cotainer_send">${rawText}<span class="msg_time_send">${timestamp}</span></div>
+                    </div>`;
+                $("#messageFormeight").append(userHtml);
+
+                $.ajax({
+                    url: "/get",
+                    type: "POST",
+                    data: {
+                        msg: rawText,
+                        language: selectedLanguage,
+                    },
+                })
+                    .done(function (data) {
+                        const botResponse = data || "Sorry, I didn't understand that.";
+                        const botHtml = `
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="msg_cotainer">${botResponse}<span class="msg_time">${timestamp}</span></div>
+                            </div>`;
+                        $("#messageFormeight").append($.parseHTML(botHtml))       
+                    })
+        
+
+                event.preventDefault();
+            });
+            let mediaRecorder = null;
+        let isRecording = false;
+        let audioChunks = [];
+        $("#voiceAssistant").on("click", function () {
+    if (!isRecording) {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(function (stream) {
+                mediaRecorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
+                audioChunks = [];
+
+                mediaRecorder.start();
+                isRecording = true;
+                $("#voiceAssistant").text("Recording");
+
+                mediaRecorder.ondataavailable = function (event) {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = function () {
+                    const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+
+                    const formData = new FormData();
+                    formData.append("audio", audioBlob, "recording.webm");
+                    formData.append("language", selectedLanguage); // Include the selected language
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/voice",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                    })
+                        .done(function (data) {
+                            const userMessage = data.userMessage || "Unknown input";
+                            const botResponse = data.response || "Sorry, I didn't understand that.";
+                            const str_time = new Date().toLocaleTimeString();
+
+                            // Display user message
+                            const userHtml = `<div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">${userMessage}<span class="msg_time_send">${str_time}</span></div>
+                                <div class="img_cont_msg">
+                                    <img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg">
+                                </div>
+                            </div>`;
+                            $("#messageFormeight").append($.parseHTML(userHtml));
+
+                            // Display bot response
+                            const botHtml = `<div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="https://static.vecteezy.com/system/resources/previews/016/017/018/non_2x/ecommerce-icon-free-png.png" class="rounded-circle user_img_msg">
+                                </div>
+                                <div class="msg_cotainer">${botResponse}<span class="msg_time">${str_time}</span></div>
+                            </div>`;
+                            $("#messageFormeight").append($.parseHTML(botHtml));
+
+                            // Play bot response audio if available
+                            if (data.audio) {
+                                const responseAudio = $("#responseAudio")[0];
+                                responseAudio.pause();
+                                responseAudio.currentTime = 0;
+                                responseAudio.src = data.audio + `?t=${new Date().getTime()}`; // Cache busting
+                                responseAudio.play().catch((error) => console.error("Playback failed:", error));
+                            }
+                        })
+                        .fail(function (error) {
+                            console.error("AJAX error:", error);
+                            if (error.responseText) {
+                                console.error("Server response:", error.responseText);
+                            }
+                            alert("Error sending audio to the server. Please try again.");
+                        });
+                };
+            })
+            .catch(function (error) {
+                console.error("Error accessing microphone:", error);
+                alert("Could not access your microphone. Please check your permissions.");
+            });
+    } else {
+        mediaRecorder.stop();
+        isRecording = false;
+        $("#voiceAssistant").text("Speak");
+    }
+});
+        });
+    </script>
+</body>
+</html>
