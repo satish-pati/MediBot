@@ -21,7 +21,6 @@
 ✅ Communicate in **multiple languages** using **speech & text**.  
 ✅ Get **real-time, accurate medical information**.  
 ✅ Utilize **context-aware NLP models** for improved **accuracy**.
-
 ✅ Get **professional consultation guidance** instead of self-diagnosis.  
 
 💡 **MEDIBOT Uses pretrained AI model **Llama-3.1-70B-Versatile** with a **RAG pipeline** to deliver  a seamless, **intelligent, and secure healthcare assistant**.  
