@@ -36,11 +36,17 @@
 
 ## 🛠️ Technologies Used  
 🔹 **Backend**: Python, Flask  
+
 🔹 **Frontend**: HTML, CSS ,JavaScript
-🔹 **AI Model**: Llama-3.1-70B-Versatile  
-🔹 **Speech & Text Processing**: SpeechRecognition, PyTTsx3, Pydub, GTTS  
-🔹 **NLP Frameworks**: LangChain 
-🔹 **Database**: AstraDB (VectorDB)  
+
+🔹 **AI Model**: Llama-3.1-70B-Versatile 
+
+🔹 **Speech & Text Processing**: SpeechRecognition, PyTTsx3, Pydub, GTTS 
+
+🔹 **NLP Frameworks**: LangChain
+
+🔹 **Database**: AstraDB (VectorDB)
+
 🔹 **Other Tools**: Pandas, NumPy 
 
 
