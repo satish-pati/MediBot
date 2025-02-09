@@ -12,7 +12,7 @@
 - [📜 API Endpoints](#-api-endpoints)  
 - [🔧 Requirements](#-requirements)   
 
----
+
 
 ## 📜 Project Description  
 **MEDIBOT** is a **Flask-based AI-powered multilingual medical chatbot** that enables users to:  
@@ -23,7 +23,7 @@
 
 💡 **MEDIBOT Uses pretrained AI model Llama-3.1-70B-Versatile with a RAG pipeline to deliver  a seamless, **intelligent, and secure healthcare assistant**.  
 
----
+
 
 ## ⚡ Features  
 🚀 **Real-time Voice & Text Processing** – Convert speech to text and vice versa.  
@@ -32,7 +32,7 @@
 🔬 **Medical Knowledge Base** – Uses **datasets** to enhance **response accuracy**.  
 💡 **AI-Powered Diagnosis Support** – Helps users with **basic medical insights** but advises **professional consultation**.  
 🎙️ **Speech Recognition & Text-to-Speech** – Powered by **SpeechRecognition, PyDub, and GTTS**.  
----
+
 
 ## 🛠️ Technologies Used  
 🔹 **Backend**: Python, Flask  
@@ -42,7 +42,7 @@
 🔹 **NLP Frameworks**: LangChain 
 🔹 **Database**: AstraDB (VectorDB)  
 🔹 **Other Tools**: Pandas, NumPy 
----
+
 
 ## 📦 Installation  
 💻 **To set up Medibot on your local machine:**  
