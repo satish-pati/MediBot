@@ -23,7 +23,7 @@
 ✅ Utilize **context-aware NLP models** for improved **accuracy**.                                                                            
 ✅ Get **professional consultation guidance** instead of self-diagnosis.  
 
-💡 **MEDIBOT** Uses pretrained AI model **Llama-3.1-70B-Versatile** with a **RAG pipeline** to deliver  a seamless, **intelligent, and secure healthcare assistant**.  
+💡 **MEDIBOT** Uses pretrained AI model **llama-3.3-70b-versatile** with a **RAG pipeline** to deliver  a seamless, **intelligent, and secure healthcare assistant**.  
 
 
 
@@ -47,7 +47,7 @@
 
 🔹 **Frontend**: HTML, CSS ,JavaScript
 
-🔹 **AI Model**: Llama-3.1-70B-Versatile 
+🔹 **AI Model**: llama-3.3-70b-versatile
 
 🔹 **Speech & Text Processing**: SpeechRecognition, PyTTsx3, Pydub, GTTS 
 
@@ -55,7 +55,11 @@
 
 🔹 **Database**: AstraDB (VectorDB)
 
-🔹 **Other Tools**: Pandas, NumPy 
+🔹 **Other Tools**: Pandas, NumPy
+
+🔹 **Deployment**: HuggingFace
+
+
 
 
 ## 📦 Installation  
