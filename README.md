@@ -2,7 +2,7 @@
 
 ![Medibot](https://img.shields.io/badge/AI%20Chatbot-Medical-blue?style=for-the-badge)  
 🩺 **An advanced AI-driven medical chatbot** with **voice-to-text, text-to-speech, and multilingual support**, ensuring **real-time accurate medical information** and **context-aware NLP models**.  
-
+🔗 **Live Demo:** [Click here to access MEDIBOT] (https://huggingface.co/spaces/sri1235/medibot)
 ## 📌 Table of Contents  
 - [📜 Project Description](#-project-description)  
 - [⚡ Features](#-features)  
