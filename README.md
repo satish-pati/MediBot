@@ -81,5 +81,5 @@ python app.py
 
 
 
-"# MediBot" 
+"# Deployed MediBot version "
 https://huggingface.co/spaces/sri1235/medibot
