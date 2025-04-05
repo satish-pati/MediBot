@@ -1,4 +1,4 @@
-Here is the code with added inline comments explaining each function and its purpose:
+Here is the provided code with added inline comments explaining each function and its purpose:
 
 ```python
 # Import necessary libraries
@@ -13,82 +13,83 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter # Import Recu
 def extract_text_from_pdf(pdf_path):
 """
 Extracts text from a PDF file.
-
 Args:
 pdf_path (str): The path to the PDF file.
-
 Returns:
 str: The extracted text.
 """
 try:
 # Create a PDF reader object to read the PDF file
-reader = PdfReader(pdf_path)
+reader = PdfReader(pdf_path) # Initialize a PdfReader object
 
 # Initialize an empty string to store the extracted text
-text = ""
+text = "" # Initialize an empty string to store the extracted text
 
 # Iterate over each page in the PDF
-for page in reader.pages:
+for page in reader.pages: # Loop through each page in the PDF
 # Extract the text from the current page and append it to the text string
-text += page.extract_text() + "\n"
+text += page.extract_text() + "\n" # Extract text from the current page and append to the text string
 
 # Return the extracted text, stripping any leading or trailing whitespace
-return text.strip()
+return text.strip() # Return the extracted text, removing leading/trailing whitespace
 except Exception as e:
 # If an error occurs, print an error message and return an empty string
-print(f"Error extracting text from {pdf_path}: {e}")
-return ""
+print(f"Error extracting text from {pdf_path}: {e}") # Print an error message if extraction fails
+return "" # Return an empty string if extraction fails
 
 # Define a function to convert data from a PDF file
 def dataconverter():
 """
 Processes a PDF file from Google Drive and splits it into chunks for embedding.
-
 Returns:
 list: A list of Document objects, each representing a chunk of the PDF text.
 """
 # Initialize an empty list to store the Document objects
-docs = []
+docs = [] # Initialize an empty list to store Document objects
 
 # Google Drive file ID (replace with your actual file ID)
-file_id = "1O-qQJ6PEcQ0y35At8yvUXntbCwn9Loug"
+file_id = "1O-qQJ6PEcQ0y35At8yvUXntbCwn9Loug" # Specify the Google Drive file ID
 
 # Local path to save the PDF file
-pdf_path = "./data/Medical_book.pdf"
+pdf_path = "./data/Medical_book.pdf" # Specify the local path to save the PDF file
 
 # Download the PDF from Google Drive using gdown library
-gdown.download(f"https://drive.google.com/uc?id={file_id}", pdf_path, quiet=False)
+gdown.download(f"https://drive.google.com/uc?id={file_id}", pdf_path, quiet=False) # Download the PDF from Google Drive
 
 # Extract text from the downloaded PDF using the extract_text_from_pdf function
-text_content = extract_text_from_pdf(pdf_path)
+text_content = extract_text_from_pdf(pdf_path) # Extract text from the downloaded PDF
 
 # If text was extracted, proceed with processing
-if text_content:
+if text_content: # Check if text was extracted successfully
 # Split the text into smaller chunks using a recursive character text splitter
 text_splitter = RecursiveCharacterTextSplitter(
-chunk_size=500, # The maximum size of each chunk
-chunk_overlap=20, # The overlap between chunks
-length_function=len, # The function to use to calculate the length of each chunk
-)
-chunks = text_splitter.split_text(text_content)
+chunk_size=500, # Specify the maximum size of each chunk
+chunk_overlap=20, # Specify the overlap between chunks
+length_function=len, # Specify the function to calculate chunk length
+) # Initialize a RecursiveCharacterTextSplitter object
+chunks = text_splitter.split_text(text_content) # Split the text into chunks
 
 # Create Document objects for each chunk
-for i, chunk in enumerate(chunks):
+for i, chunk in enumerate(chunks): # Loop through each chunk
 # Define metadata for the current chunk
 metadata = {
-"file_name": os.path.basename(pdf_path), # The name of the PDF file
-"chunk_number": i, # The index of the current chunk
-"source": f"{os.path.basename(pdf_path)} - Chunk {i}", # A description of the chunk
-}
+"file_name": os.path.basename(pdf_path), # Specify the file name
+"chunk_number": i, # Specify the chunk number
+"source": f"{os.path.basename(pdf_path)} - Chunk {i}", # Specify the chunk source
+} # Define metadata for the current chunk
 
 # Create a Document object for the current chunk
-doc = Document(page_content=chunk, metadata=metadata)
+doc = Document(page_content=chunk, metadata=metadata) # Create a Document object
 
 # Add the Document object to the list of documents
-docs.append(doc)
+docs.append(doc) # Append the Document object to the list
 
 # Return the list of Document objects
-return docs
+return docs # Return the list of Document objects
 ```
 
-Note: The inline comments explain the purpose of each section of the code, and the docstrings provide a description of each function, its arguments, and its return values.
+This code is well-structured and readable. The inline comments explain each section of the code, and the docstrings provide a description of each function, its arguments, and its return values. The code is also properly formatted, making it easy to follow and understand.
+
+The `extract_text_from_pdf` function extracts text from a PDF file, and the `dataconverter` function processes a PDF file from Google Drive, splits it into chunks, and creates Document objects for each chunk. The code uses libraries like `pypdf` for reading PDF files, `gdown` for downloading files from Google Drive, and `langchain` for text splitting and Document creation.
+
+Overall, the code is well-organized, and the comments provide a clear explanation of each section, making it easy to understand and maintain.
