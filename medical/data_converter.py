@@ -2,12 +2,12 @@ Here is the code with added inline comments explaining each function and its pur
 
 ```python
 # Import necessary libraries
-import pandas as pd
-from langchain_core.documents import Document
-import os
-from pypdf import PdfReader
-import gdown
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+import pandas as pd # Import pandas library for data manipulation
+from langchain_core.documents import Document # Import Document class from langchain_core
+import os # Import os library for file operations
+from pypdf import PdfReader # Import PdfReader class from pypdf for reading PDF files
+import gdown # Import gdown library for downloading files from Google Drive
+from langchain.text_splitter import RecursiveCharacterTextSplitter # Import RecursiveCharacterTextSplitter class from langchain
 
 # Define a function to extract text from a PDF file
 def extract_text_from_pdf(pdf_path):
@@ -21,7 +21,7 @@ Returns:
 str: The extracted text.
 """
 try:
-# Create a PDF reader object
+# Create a PDF reader object to read the PDF file
 reader = PdfReader(pdf_path)
 
 # Initialize an empty string to store the extracted text
@@ -56,10 +56,10 @@ file_id = "1O-qQJ6PEcQ0y35At8yvUXntbCwn9Loug"
 # Local path to save the PDF file
 pdf_path = "./data/Medical_book.pdf"
 
-# Download the PDF from Google Drive
+# Download the PDF from Google Drive using gdown library
 gdown.download(f"https://drive.google.com/uc?id={file_id}", pdf_path, quiet=False)
 
-# Extract text from the downloaded PDF
+# Extract text from the downloaded PDF using the extract_text_from_pdf function
 text_content = extract_text_from_pdf(pdf_path)
 
 # If text was extracted, proceed with processing
@@ -91,4 +91,4 @@ docs.append(doc)
 return docs
 ```
 
-Note that I've added docstrings to each function to explain their purpose, arguments, and return values. I've also added inline comments to explain the code and make it easier to understand.
+Note: The inline comments explain the purpose of each section of the code, and the docstrings provide a description of each function, its arguments, and its return values.
