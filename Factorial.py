@@ -1,13 +1,11 @@
 import unittest
 
-# Function to calculate factorial
 def factorial(n):
     if n == 0 or n == 1:
         return 1
     else:
         return n * factorial(n - 1)
 
-# Test Case for factorial function
 class TestFactorial(unittest.TestCase):
     
     def test_factorial_positive(self):
